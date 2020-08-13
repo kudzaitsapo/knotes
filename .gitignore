@@ -1,0 +1,5 @@
+.vscode
+venv/
+*.db
+*.pyc
+*.sqlite3
