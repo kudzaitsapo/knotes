@@ -3,3 +3,4 @@ venv/
 *.db
 *.pyc
 *.sqlite3
+seeder.py

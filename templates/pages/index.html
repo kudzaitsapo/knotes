@@ -2,10 +2,18 @@
 
 {% block title %} My notes {% endblock %}
 
+{% block meta %}
+<meta name="description" content="150 words">
+<meta name="author" content="Kudzai Tsapo">
+<meta name="url" content="http://www.yourdomainname.com">
+<meta name="copyright" content="knotes">
+<meta name="robots" content="index,follow">
+{% endblock %}
+
 {% block subtitle %}
 <div class="sub-title">
     <h1>Kudzi Notes</h1>
- <a href="#"><i class="icon-envelope"></i></a>
+ <a href="{{ url_for('blog.contact_me')}}"><i class="icon-envelope"></i></a>
 </div>
 
 {% endblock %}

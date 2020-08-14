@@ -7,6 +7,14 @@ def create_app(config=BaseConfig):
     if config:
         app.config.from_object(config)
 
+    
+    # registering app factories
+    from models import db
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
     # registering blueprints
     from blueprints.blog import blog
 

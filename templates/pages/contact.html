@@ -1,0 +1,95 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Get in touch {% endblock %}
+
+{% block subtitle %}
+<div class="sub-title">
+    <h1>Contact Me</h1>
+    <a href="{{ url_for('blog.index')}}"><i class="icon-home"></i></a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="col-md-12 content-page">
+    <div class="col-md-12 blog-post">
+                
+        <!-- Contact Me Start -->
+        <div class="post-title margin-top-70">
+            <h2>Get in <span class="main-color">touch</span></h2>
+        </div>
+            
+            
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="contact-us-detail">  
+                    <i class="icon-screen-smartphone color-6"></i>
+                    <p><a href="tel:+263783449906">+263 78 344 9906</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4">
+                <div class="contact-us-detail">
+                    <i class="icon-envelope-open color-5"></i>
+                    <p><a href="mailto:kudzaitsapo@gmail.com">kudzaitsapo@gmail.com</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4">
+                <div class="contact-us-detail">
+                    <i class="icon-clock color-3"></i>
+                    <p>Mon - Fri 09:00 – 15:00</p>
+                </div>
+            </div>
+        </div>
+
+         
+        <div class="row margin-top-30">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                <ul class=flashes>
+                                {% for category, message in messages %}
+                                    <li class="alert alert-{{ category }}">{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="row">
+                    <form method="POST" action="">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" name="name" id="name" class="form-control" required placeholder="Your Name">
+                            </div>
+                        </div>
+        
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" class="form-control" required placeholder="Your Email Address">
+                            </div>
+                        </div>
+    
+        
+                        <div class="col-sm-12">
+                            <div class="textarea-message form-group">
+                                <textarea id="message" name="message" class="textarea-message form-control" required placeholder="Your Message" rows="5"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="text-center">      
+                            <button type="submit" class="load-more-button">Send</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Contact Me End -->
+    </div>
+</div>
+
+{% endblock %}

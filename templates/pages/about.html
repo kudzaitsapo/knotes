@@ -1,0 +1,73 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} About me {% endblock %}
+
+{% block subtitle %}
+<div class="sub-title">
+    <h1>About Me</h1>
+    <a href="{{ url_for('blog.contact_me')}}"><i class="icon-envelope"></i></a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="col-md-12 content-page">
+    <div class="col-md-12 blog-post">
+
+
+        <!-- My Intro Start -->
+        <div class="post-title margin-bottom-30">
+            <h2>Hi, I am <span class="main-color">Kudzai Tsapo</span></h2>
+    
+            <ul class="knowledge">
+                <li class="bg-color-1">Web Developer</li>
+                <li class="bg-color-4">Author</li>
+                <li class="bg-color-6">Aspiring Data Scientist</li>
+                <li class="bg-color-5">Consultant</li>
+                <li class="bg-color-4">Idealist</li>
+            </ul>
+        
+        </div>
+        <!-- My Intro End -->
+    
+    
+        <p>
+            I am an experienced Software Engineer with a demonstrated history of working in the information technology and services industry. 
+            My skills include Python, Java (<em>even though I prefer C#</em>), SQL (Postgres, MySQL, MSSQL) and NoSQL (MongoDB). I have a bit of knowledge in a lot of frameworks
+            some of which include Spring Boot (Java), Express (NodeJS), Flask & Django (Python) and Laravel (PHP).I have a Bachelor's degree in Computer Science
+            from University of Zimbabwe ( class of 2019 ). 
+        </p>
+        <p>
+            I like writing articles, and with my friends, we usually do writing sessions in which we get a topic, and everyone writes something on the topic. It's quite fun,
+            well, for me that is, even though I admit that it can be quite torturous. Well, I also like coding scripts like web crawlers and stuff. And of course, I like reading
+            a lot of things, from business books, self help books, fictions, psychological and so on.
+        </p>
+        <p>
+            I also love learning about blockchain and AI, and no, I don't think AI will take over the world. Well, not any time soon. If you have anything you need to ask,
+            or talk about in general, or even yell at me for (<em> umm, be careful about this one...</em>), feel free to get in touch. I'll try my best to be available....
+        </p>
+    
+    
+    
+    
+        <!-- My Service Start -->
+        <div class="post-title">
+            <h2>My <span class="main-color">Services</span></h2> 
+        </div>
+        
+        <div class="list list-style-2 margin-top-30">
+            <ul>
+                <li>Software Development</li>
+                <li>Data analytics</li>
+                <li>Software consulting</li>
+                <li>Article writing</li>
+            </ul>
+        </div>
+        <!-- My Service End --> 
+    
+    </div>  
+
+    <div class="col-md-12 text-center">
+        <a href="{{ url_for('blog.contact_me')}}" data-toggle="tooltip" data-placement="top" title="Visit on my contact page to get in touch." class="load-more-button">Contact</a>
+    </div>
+    
+</div>
+{% endblock %}
