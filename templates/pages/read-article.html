@@ -1,0 +1,80 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ article.title }} {% endblock %}
+{% block subtitle %}
+<div class="sub-title">
+    <a href="{{ url_for('blog.index')}}" title="Go to Home Page"><h1>Back Home</h1></a>
+    <a href="{{ url_for('blog.contact_me')}}" class="smoth-scroll"><i class="icon-bubbles"></i></a>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12 content-page">
+    <div class="col-md-12 blog-post">
+                            	
+                                
+        <!-- Post Headline Start -->
+        <div class="post-title">
+            <h2>{{ article.title }}</h2> 
+        </div>
+        <!-- Post Headline End -->
+        
+            
+        <!-- Post Detail Start -->
+        <div class="post-info">
+            <span>Published: {{ article.created_at.strftime('%B %d, %Y')}}</a></span><br>
+            <span>Last Edited: 
+                {% if article.updated_at %}
+                    {{ article.updated_at.strftime('%B %d, %Y')}}
+                {% else %}
+                    Not edited
+                {% endif %}
+            </span>
+        </div>
+        <!-- Post Detail End -->
+            
+            
+       {{ article.content | safe}}
+            
+            
+            
+        <!-- You May Also Like Start -->
+        <div class="you-may-also-like margin-top-50 margin-bottom-50">
+            <h3>You may also like</h3>
+                <div class="row">
+            
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                <a href="#"><p>Make mailchimp singup form working with ajax using jquery plugin</p></a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                <a href="#"><p>How to design elegant e-mail newsletter in html for wish christmas to your subscribers?</p></a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                <a href="#"><p>How to customize a wordpress theme entirely from scratch using a child theme?</p></a>
+                </div>
+            
+            </div>
+        </div>
+        <!-- You May Also Like End -->
+            
+            
+            
+            
+        <!-- Post Comment Start -->
+        <div id="comment" class="comment">
+        <h3>Discuss about post</h3>
+            
+            
+            <!-- You can use here any third party commenting plugin here like disqus.com-->
+
+        </div>
+        <!-- Post Comment End -->
+
+    </div>    
+</div>
+                              
+                         
+{% endblock %}

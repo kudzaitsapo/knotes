@@ -1,0 +1,90 @@
+{% extends "layouts/admin.base.html" %}
+
+{% block title %} My Articles {% endblock %}
+
+{% block content %}
+ <!-- Main content -->
+ <section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Articles</h3>
+        <div class="card-tools">
+            <a type="button" class="btn btn-tool" href="{{ url_for('admin.add_article')}}">
+              <i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th class="text-center">
+                        Title
+                    </th>
+                    <th class="text-center">
+                        Category
+                    </th>
+                    <th class="text-center">
+                        Status
+                    </th>
+                    <th class="text-center">
+                        Date Added
+                    </th>
+                    <th class="text-center">
+                        Last Edited
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               {% for article in articles %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td class="text-center">{{ article.title }}</td>
+                        <td class="text-center">{{ article.category }}</td>
+                        <td class="text-center">
+                            {% if article.status == 0 %}
+                                <span>Draft</span>
+                            {% elif article.status == 1 %}
+                                <span>Published</span>
+                            {% else %}
+                                <span>Deleted</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">{{ article.created_at.strftime('%B %d, %Y')}}</td>
+                        <td class="text-center">
+                            {% if article.updated_at %}
+                                 {{ article.updated_at.strftime('%B %d, %Y')}}
+                            {% else %}
+                                Not updated
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ url_for('admin.edit_article', id=article.id)}}"> <i class="fa fa-edit text-warning"></i> Edit</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><span>No articles yet...</span></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+               {% endfor %}
+               
+            </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+  </section>
+  <!-- /.content -->
+{% endblock %}

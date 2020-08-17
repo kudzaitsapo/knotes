@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, flash
 from models import db, Article, Category, ContactMessage
+from sqlalchemy import desc
 
 
 blog = Blueprint('blog', __name__)
@@ -8,12 +9,18 @@ blog = Blueprint('blog', __name__)
 @blog.route('/')
 @blog.route('/articles')
 def index():
-    return render_template('pages/index.html')
+    articles = Article.query.filter(Article.status == 1) \
+                    .order_by(desc(Article.created_at)) \
+                    .all()
+    return render_template('pages/index.html', articles=articles)
 
 
 @blog.route('/articles/<slug>')
 def read_article(slug):
-    return render_template('pages/read-article.html')
+    article = Article.query.join(Category, Article.category == Category.id) \
+                .add_columns(Article.title, Article.updated_at, Article.created_at, Article.content, Category.name.label('category')) \
+                .filter(Article.slug == slug).first_or_404()
+    return render_template('pages/read-article.html', article=article)
 
 @blog.route('/about')
 def about_me():

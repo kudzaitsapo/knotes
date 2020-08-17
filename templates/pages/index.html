@@ -20,19 +20,32 @@
 
 {% block content %}
 
+{% for article in articles %}
 <div class="col-md-12 content-page">
     <!-- Blog Post Start -->
     <div class="col-md-12 blog-post">
         <div class="post-title">
-          <a href="#"><h2>How to make your company website based on bootstrap framework on localhost?</h2></a>
+          <a href="{{ url_for('blog.read_article', slug=article.slug)}}"><h2>{{ article.title }}</h2></a>
         </div>  
         <div class="post-info">
-            <span>November 23, 2016 / by <a href="#" target="_blank">Alex Parker</a></span>
+            <span>{{ article.created_at.strftime('%B %d, %Y')}} </span>
         </div>  
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae ut ratione similique temporibus tempora dicta soluta? Qui hic, voluptatem nemo quo corporis dignissimos voluptatum debitis cumque fugiat mollitia quasi quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae ut ratione similique.</p>                          			
-        <a href="#" class="button button-style button-anim fa fa-long-arrow-right"><span>Read More</span></a>
+        <p>{{ article.content | truncate(200) | safe }}</p>                          			
+        <a href="{{ url_for('blog.read_article', slug=article.slug)}}" class="button button-style button-anim fa fa-long-arrow-right"><span>Read More</span></a> 
     </div>
     <!-- Blog Post End -->
 </div>
+{% else %}
+<div class="col-md-12 content-page">
+    <!-- Blog Post Start -->
+    <div class="col-md-12 blog-post">
+        <div class="post-info">
+            <span>August 2020</span>
+        </div>  
+        <p>No articles have been added yet...</p>
+    </div>
+    <!-- Blog Post End -->
+</div>
+{% endfor %}
 
 {% endblock %}

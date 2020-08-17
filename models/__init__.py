@@ -44,6 +44,8 @@ class ContactMessage(db.Model):
                     primary_key=True)
     name = db.Column(db.String(80), 
                       nullable=False)
+    email = db.Column(db.String(80), 
+                        nullable=False)
     message = db.Column(db.String(200),
                         nullable=False)
     created_at = db.Column(db.DateTime,

@@ -1,0 +1,149 @@
+{% extends "layouts/admin.base.html" %}
+
+{% block title %} Edit Article {% endblock %}
+
+{% block stylesheets %}
+ <!-- summernote -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/summernote/summernote-bs4.css')}}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <a href="{{ url_for('admin.articles')}}" class="btn btn-primary btn-block mb-3">Back to Articles</a>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">Edit article</h3>
+            </div>
+          
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form action="{{ url_for('admin.edit_article', id=article.id)}}" method="POST" id="editArticleForm" enctype="multipart/form-data">
+                    <input type="hidden" name="status" id="status" value="{{ article.status }}">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input class="form-control" value="{{ article.title }}" required name="title" id="title" placeholder="Title:">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select name="category" required id="category" class="form-control">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}" {% if category.id == article.category %}
+                                          selected
+                                        {% endif %}>{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="compose-textarea">Content</label>
+                        <textarea id="compose-textarea" name="article" class="form-control" style="height: 300px">
+                          {{ article.content }}
+                        </textarea>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <div class="float-right">
+                <button type="button" id="draftBtn" class="btn btn-default"><i class="fa fa-save"></i> Draft</button>
+                <button type="button" id="submitBtn" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Publish</button>
+              </div>
+              <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+{% endblock %}
+
+{% block scripts %}
+<!-- Summernote -->
+<script src="{{url_for('static', filename='admin/vendors/summernote/summernote-bs4.min.js')}}"></script>
+
+<!-- Select2 -->
+<script src="{{ url_for('static', filename='admin/vendors/select2/js/select2.full.min.js')}}"></script>
+
+<!-- SweetAlert2 -->
+<script src="{{ url_for('static', filename='admin/vendors/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='admin/vendors/toastr/toastr.min.js')}}"></script>
+<!-- Page Script -->
+<script>
+  $(function () {
+    //Add text editor
+    $('#compose-textarea').summernote();
+
+    //Initialize Select2 Elements
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    });
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    $('#editArticleForm').submit(function(event){
+        event.preventDefault();
+        var data = new FormData($('#editArticleForm')[0]);
+        $.ajax({
+            type: 'POST',
+            url: $('#editArticleForm').attr('action'),
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function(response) {
+                Toast.fire({
+                    icon: response.icon,
+                    title: response.message
+                });
+            },
+            error: function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Failed to save the story!'
+                });
+            }
+        });
+    });
+
+    $('#submitBtn').click(function(event){
+        event.preventDefault();
+        $("#editArticleForm").trigger('submit');
+    });
+
+    $('#draftBtn').click(function(event){
+      event.preventDefault();
+      $('#status').val(0);
+      $("#editArticleForm").trigger('submit');
+    });
+  });
+</script>
+{% endblock %}

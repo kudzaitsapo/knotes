@@ -1,0 +1,99 @@
+{% extends "layouts/admin.base.html" %} 
+
+{% block title %}
+Add a category
+{% endblock %}
+
+{% block stylesheets %}
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/vendors/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.articles')}}" class="btn btn-primary btn-block mb-3">Back</a>
+        </div>
+        <!-- /.col -->
+        <!-- left column -->
+        <div class="col-md-9">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Create a category</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="POST" id="addCategoryForm" action="{{ url_for('admin.add_category')}}">
+              <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="category" required id="category" placeholder="Category name">
+                            </div>
+                        </div>
+                    </div>
+               
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Create</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!--/.col (left) -->
+       
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+{% block scripts %}
+<!-- SweetAlert2 -->
+<script src="{{ url_for('static', filename='admin/vendors/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='admin/vendors/toastr/toastr.min.js')}}"></script>
+<script>
+$(function(){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    
+    $('#addCategoryForm').submit(function(event){
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $('#addCategoryForm').attr('action'),
+            data: $('#addCategoryForm').serialize(),
+            success: function(response) {
+                Toast.fire({
+                    icon: response.icon,
+                    title: response.message
+                });
+            },
+            error: function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Failed to save the category!'
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
