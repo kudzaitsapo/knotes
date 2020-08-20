@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, flash
+from flask import Blueprint, render_template, redirect, request, flash, jsonify
 from models import db, Article, Category, ContactMessage
 from sqlalchemy import desc
 
@@ -25,6 +25,13 @@ def read_article(slug):
 @blog.route('/about')
 def about_me():
     return render_template('pages/about.html')
+
+
+@blog.route('/subscribe', methods=['GET', 'POST'])
+def subscribe():
+    response = 'Thank you for subscribing. I was too lazy to edit this piece....'
+    return jsonify(response)
+
 
 
 @blog.route('/contact', methods=['GET', 'POST'])
