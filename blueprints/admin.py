@@ -77,7 +77,8 @@ def add_article():
 @admin_bp.route('/categories')
 @login_required
 def categories():
-    return render_template('admin/categories.html')
+    categories = Category.query.all()
+    return render_template('admin/categories.html', categories=categories)
 
 @admin_bp.route('/categories/add-category', methods=['GET', 'POST'])
 @login_required
@@ -97,6 +98,25 @@ def add_category():
 
         return jsonify(response)
     return render_template('admin/add-category.html')
+
+
+@admin_bp.route('/categories/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_category(id):
+    category = Category.query.get(int(id))
+    if request.method == 'POST':
+        category_name = request.form.get('category')
+        response = { 'icon': 'error', 'message': '' }
+        try:
+            category.name = category_name
+            db.session.commit()
+            response['icon'] = 'success'
+            response['message'] = 'Yipppeee, we saved it.'
+        except Exception as error:
+            print('[-] Error: {}'.format(str(error)))
+            response['message'] = 'Uh oh! Something crashed!'
+        return jsonify(response)
+    return render_template('admin/edit-category.html', category=category)
 
 
 @admin_bp.route('/articles/<id>/edit', methods=['GET', 'POST'])

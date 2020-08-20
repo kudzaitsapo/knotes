@@ -1,7 +1,7 @@
 {% extends "layouts/admin.base.html" %} 
 
 {% block title %}
-Add a category
+Edit a category
 {% endblock %}
 
 {% block stylesheets %}
@@ -25,18 +25,18 @@ Add a category
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Create a category</h3>
+              <h3 class="card-title">Edit a category</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" method="POST" id="addCategoryForm" action="{{ url_for('admin.add_category')}}">
+            <form role="form" method="POST" id="editCategoryForm" action="{{ url_for('admin.edit_category', id=category.id)}}">
               <div class="card-body">
 
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-sm-12">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" name="category" required id="category" placeholder="Category name">
+                                <input type="text" class="form-control" name="category" required id="category" value="{{ category.name }}" placeholder="Category name">
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@ Add a category
               <!-- /.card-body -->
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
@@ -74,12 +74,12 @@ $(function(){
       timer: 3000
     });
     
-    $('#addCategoryForm').submit(function(event){
+    $('#editCategoryForm').submit(function(event){
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: $('#addCategoryForm').attr('action'),
-            data: $('#addCategoryForm').serialize(),
+            url: $('#editCategoryForm').attr('action'),
+            data: $('#editCategoryForm').serialize(),
             success: function(response) {
                 Toast.fire({
                     icon: response.icon,
