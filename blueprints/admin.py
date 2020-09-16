@@ -59,7 +59,7 @@ def add_article():
         try:
             title = request.form.get('title')
             category = request.form.get('category')
-            article_content = request.form.get('article')
+            article_content = str(request.form.get('article')).replace('font-size: 1rem;', '')
             status = request.form.get('status')
 
             article = Article(title=title, slug=slugify(title), category=category, content=article_content, status=status)
@@ -130,7 +130,7 @@ def edit_article(id):
        
         try:
             article.title = request.form.get('title')
-            article.content = request.form.get('article')
+            article.content = str(request.form.get('article')).replace('font-size: 1rem;', '')
             article.status = request.form.get('status')
             article.category = request.form.get('category')
             db.session.commit()
